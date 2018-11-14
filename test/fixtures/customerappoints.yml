@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  customer_id: 
+  user_id: 
+  appointtp_id: 
+  appointtime: 2018-09-20 22:40:07
+  summary: MyText
+
+two:
+  customer_id: 
+  user_id: 
+  appointtp_id: 
+  appointtime: 2018-09-20 22:40:07
+  summary: MyText

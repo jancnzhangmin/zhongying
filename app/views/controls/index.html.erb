@@ -1,0 +1,400 @@
+<%= render 'layerbegin' %>
+
+<script>
+    $(document).ready(function(){
+        var content_width = $('.page-content').width();
+        $('#customeranalyse').height(content_width / 4);
+        $('#customerconsumeanalyse').height(content_width / 4);
+        $('#intentiongrow').height(content_width / 4);
+        $('#customergrow').height(content_width / 4);
+        $('#product').height(content_width / 4);
+        var month_data =[];
+        '<% @monthdata.each do |m| %>'
+        month_data.push('<%= m %>');
+        '<% end %>'
+
+        var customeranalyse_Chart = echarts.init(document.getElementById('customeranalyse'),'shine');
+        var customeranalyse_data = [];
+        '<% @customeralanyse.each do |f| %>'
+        var option={
+            value:'<%= f.value %>',
+            name:'<%= f.name %>'
+        };
+        customeranalyse_data.push(option);
+        '<% end %>'
+        customeranalyse_option = {
+
+            tooltip : {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: ['客户','意向客户','待跟进意向','待跟进客户','服务即将到期']
+            },
+            series : [
+                {
+                    name: '客户分析',
+                    type: 'pie',
+                    radius : '55%',
+                    center: ['50%', '50%'],
+                    data:customeranalyse_data,
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+        customeranalyse_Chart.setOption(customeranalyse_option);
+
+        var customerconsumeanalyse_Chart = echarts.init(document.getElementById('customerconsumeanalyse'),"shine");
+        var customerconsumeanalyse_data = [];
+        '<% @customerconsumeanalyse.each do |f| %>'
+        customerconsumeanalyse_data.push('<%= f %>');
+        '<% end %>'
+        customerconsumeanalyse_option = {
+            color: ['#37A2DA', '#32C5E9', '#67E0E3', '#9FE6B8', '#FFDB5C','#ff9f7f', '#fb7293', '#E062AE', '#E690D1', '#e7bcf3', '#9d96f5', '#8378EA', '#96BFFF'],
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: month_data
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [{
+                data: customerconsumeanalyse_data,
+                type: 'line',
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'top'
+                    }
+                },
+                areaStyle: 'shine'
+
+            }]
+        };
+        customerconsumeanalyse_Chart.setOption(customerconsumeanalyse_option);
+
+        var intentiongrow_Chart = echarts.init(document.getElementById('intentiongrow'),'shine');
+        var intentiongrow_data = [];
+        '<% @intentiongrow.each do |f| %>'
+        intentiongrow_data.push('<%= f %>');
+        '<% end %>'
+        intentiongrow_option = {
+            color: ['#2ec7c9','#b6a2de','#5ab1ef','#ffb980','#d87a80',
+                '#8d98b3','#e5cf0d','#97b552','#95706d','#dc69aa',
+                '#07a2a4','#9a7fd1','#588dd5','#f5994e','#c05050',
+                '#59678c','#c9ab00','#7eb00a','#6f5553','#c14089'],
+            xAxis: {
+                type: 'category',
+                data: month_data
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [{
+                data: intentiongrow_data,
+                type: 'line',
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'top'
+                    }
+                },
+                areaStyle: {}
+            }]
+        };
+        intentiongrow_Chart.setOption(intentiongrow_option);
+
+        var customergrow_Chart = echarts.init(document.getElementById('customergrow'),'shine');
+        var customergrow_data = [];
+        '<% @customergrow.each do |f| %>'
+        customergrow_data.push('<%= f %>');
+        '<% end %>'
+        customergrow_option = {
+            xAxis: {
+                type: 'category',
+                data: month_data
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [{
+                data: customergrow_data,
+                type: 'line',
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'top'
+                    }
+                },
+                areaStyle: {}
+            }]
+        };
+        customergrow_Chart.setOption(customergrow_option);
+
+
+
+        var product_data = [];
+var product_name = [];
+        var getprice = function(price){
+            var pricearr = price.split(',');
+            var fpricearr = [];
+            $.each(pricearr,function(i,p){
+                if(parseFloat(p)){
+                    fpricearr.push(p);
+                }else{
+                    fpricearr.push(0);
+                }
+            });
+            return fpricearr;
+        };
+
+        '<% @products.each do |p| %>'
+        product_name.push('<%= p.name %>');
+        var p_option = {
+          name:'<%= p.name %>',
+            type:'bar',
+            data:getprice('<%= p.price %>'),
+            markPoint : {
+                data : [
+                    {type : 'max', name: '最大值'}
+                ]
+            }
+        };
+        product_data.push(p_option);
+        '<% end %>'
+        var product_Chart = echarts.init(document.getElementById('product'),'shine');
+        price_option = {
+            tooltip : {
+                trigger: 'axis'
+            },
+            legend: {
+                data:product_name
+            },
+            toolbox: {
+                show : true,
+                feature : {
+                    dataView : {show: true, readOnly: false},
+                    magicType : {show: true, type: ['line', 'bar']},
+                    restore : {show: true},
+                    saveAsImage : {show: true}
+                }
+            },
+            calculable : true,
+            xAxis : [
+                {
+                    type : 'category',
+                    data : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
+                }
+            ],
+            yAxis : [
+                {
+                    type : 'value'
+                }
+            ],
+            series : product_data
+        };
+        product_Chart.setOption(price_option);
+    });
+</script>
+
+
+<div class="page-content">
+
+
+  <div class="row">
+
+
+    <div class="col-sm-3">
+      <div class="widget-box transparent">
+        <div class="widget-header widget-header-flat">
+          <h4 class="lighter">
+            <i class="icon-group orange"></i>
+            客户分析
+          </h4>
+          <div class="widget-toolbar">
+            <a href="#" data-action="collapse">
+              <i class="icon-chevron-up"></i>
+            </a>
+          </div>
+        </div>
+        <div class="widget-body">
+          <div id="customeranalyse">
+
+          </div>
+        </div><!-- /widget-body -->
+      </div><!-- /widget-box -->
+    </div>
+
+    <div class="col-sm-6">
+      <div class="widget-box transparent">
+        <div class="widget-header widget-header-flat">
+          <h4 class="lighter">
+            <i class="fa fa-area-chart orange"></i>
+            客户消费分析
+          </h4>
+          <div class="widget-toolbar">
+            <a href="#" data-action="collapse">
+              <i class="icon-chevron-up"></i>
+            </a>
+          </div>
+        </div>
+        <div class="widget-body">
+          <div id="customerconsumeanalyse">
+
+          </div>
+        </div><!-- /widget-body -->
+      </div><!-- /widget-box -->
+    </div>
+
+    <div class="col-sm-3">
+      <div class="widget-box transparent">
+        <div class="widget-header widget-header-flat">
+          <h4 class="lighter">
+            <i class="icon-yen orange"></i>
+            消费排名
+          </h4>
+
+          <div class="widget-toolbar">
+            <a href="#" data-action="collapse">
+              <i class="icon-chevron-up"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="widget-body">
+          <div class="widget-main no-padding">
+            <table class="table table-bordered table-striped">
+              <thead class="thin-border-bottom">
+              <tr>
+                <th>
+                  <i class="icon-caret-right blue"></i>
+                  公司
+                </th>
+
+                <th>
+                  <i class="icon-caret-right blue"></i>
+                  联系人
+                </th>
+
+                <th class="hidden-480">
+                  <i class="icon-caret-right blue"></i>
+                  消费
+                </th>
+              </tr>
+              </thead>
+
+              <tbody>
+              <% @customersaleranking[0,4].each do |f| %>
+              <tr>
+                <td>
+                  <%= f.commpany %>
+                </td>
+                <td>
+                  <%= f.contact %>
+                </td>
+                <td>
+                  <span class="red">
+                    ￥<%= f.price %>
+                  </span>
+                </td>
+
+                <% end %>
+              </tr>
+
+              </tbody>
+            </table>
+          </div><!-- /widget-main -->
+        </div><!-- /widget-body -->
+      </div><!-- /widget-box -->
+    </div>
+
+
+
+
+
+
+  </div>
+  <div class="hr hr32 hr-dotted"></div>
+  <div class="row">
+
+    <div class="col-sm-6">
+      <div class="widget-box transparent">
+        <div class="widget-header widget-header-flat">
+          <h4 class="lighter">
+            <i class="fa fa-bar-chart orange"></i>
+            意向用户增长
+          </h4>
+          <div class="widget-toolbar">
+            <a href="#" data-action="collapse">
+              <i class="icon-chevron-up"></i>
+            </a>
+          </div>
+        </div>
+        <div class="widget-body">
+          <div id="intentiongrow">
+
+          </div>
+        </div><!-- /widget-body -->
+      </div><!-- /widget-box -->
+    </div>
+
+    <div class="col-sm-6">
+      <div class="widget-box transparent">
+        <div class="widget-header widget-header-flat">
+          <h4 class="lighter">
+            <i class="fa fa-bar-chart orange"></i>
+            客户增长
+          </h4>
+          <div class="widget-toolbar">
+            <a href="#" data-action="collapse">
+              <i class="icon-chevron-up"></i>
+            </a>
+          </div>
+        </div>
+        <div class="widget-body">
+          <div id="customergrow">
+
+          </div>
+        </div><!-- /widget-body -->
+      </div><!-- /widget-box -->
+    </div>
+
+  </div>
+
+  <div class="hr hr32 hr-dotted"></div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="widget-box transparent">
+        <div class="widget-header widget-header-flat">
+          <h4 class="lighter">
+            <i class="fa fa-bar-chart orange"></i>
+            产品分析
+          </h4>
+          <div class="widget-toolbar">
+            <a href="#" data-action="collapse">
+              <i class="icon-chevron-up"></i>
+            </a>
+          </div>
+        </div>
+        <div class="widget-body">
+          <div id="product">
+
+          </div>
+        </div><!-- /widget-body -->
+      </div><!-- /widget-box -->
+    </div>
+  </div>
+
+</div>
+
+
+<% render 'layerend' %>

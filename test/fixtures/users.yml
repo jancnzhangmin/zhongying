@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  openid: MyString
+  unionid: MyString
+  headurl: MyString
+  login: MyString
+  password_digest: MyString
+  wxauth: 1
+  status: 1
+
+two:
+  name: MyString
+  openid: MyString
+  unionid: MyString
+  headurl: MyString
+  login: MyString
+  password_digest: MyString
+  wxauth: 1
+  status: 1

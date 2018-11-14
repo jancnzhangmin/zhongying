@@ -1,0 +1,18 @@
+<%= render 'layerbegin' %>
+
+<script>
+    $(document).ready(function(){
+        $('#followappointspan').text('<%= @intentions.count %>');
+    });
+</script>
+
+<div class="page-content">
+  <div class="page-header">
+    <h1>
+      待跟进意向
+    </h1>
+  </div><!-- /.page-header -->
+
+<%= render 'form' %>
+
+<%= render 'layerend' %>

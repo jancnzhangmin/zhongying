@@ -1,0 +1,32 @@
+<%= render 'layerbegin' %>
+<script>
+    $(document).ready(function(){
+        $("#provinceid").val('<%= @selectprovince %>');
+
+        $('#cityid').html('<%= j(options_from_collection_for_select @city, :address, :address)%>');
+        $("#cityid").prepend("<option value=''>--市--</option>");
+        $("#cityid").val('<%= @selectcity %>');
+
+        $('#districtid').html('<%= j(options_from_collection_for_select @district, :address, :address)%>');
+        $("#districtid").prepend("<option value=''>--区/县--</option>");
+        $("#districtid").val('<%= @selectdistrict %>');
+
+    });
+</script>
+<div class="page-content">
+  <div class="page-header">
+    <h1>
+      编辑客户
+    </h1>
+  </div><!-- /.page-header -->
+
+  <div class="row">
+    <div class="col-xs-12">
+      <%= render 'form', customer: @customer %>
+    </div>
+
+
+  </div><!-- /row -->
+
+  </div>
+<%= render 'layerend' %>

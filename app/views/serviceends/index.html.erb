@@ -1,0 +1,92 @@
+<%= render 'layerbegin' %>
+
+<script>
+  $(document).ready(function(){
+     $('#serviceendspan').text('<%= @products.count %>');
+  });
+</script>
+
+<div class="page-content">
+  <div class="page-header">
+    <h1>
+      服务即将到期
+    </h1>
+  </div><!-- /.page-header -->
+
+  <div class="row">
+    <div class="col-xs-12">
+      <!-- PAGE CONTENT BEGINS -->
+
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="table-responsive">
+            <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+              <thead>
+              <tr>
+                <th class="text-center">公司</th>
+                <th class="text-center">联系人</th>
+                <th class="text-center">产品名称</th>
+                <th class="text-center">型号</th>
+                <th class="text-center">单位</th>
+                <th class="text-center">单价</th>
+                <th class="text-center">数量</th>
+                <th class="text-center">合计</th>
+                <th class="text-center">即将到期</th>
+                <th class="text-center" width="150px">操作</th>
+              </tr>
+              </thead>
+              <tbody>
+              <% @products.each do |product| %>
+                  <tr>
+                    <td>
+                      <%= product.customer.commpany %>
+                    </td>
+                    <td>
+                      <%= product.customer.contact %>
+                    </td>
+                    <td>
+                      <%= product.productdef.name %>
+                    </td>
+                    <td>
+                      <%= product.productdef.model %>
+                    </td>
+                    <td>
+                      <%= product.productdef.unit %>
+                    </td>
+                    <td>
+                      <%= product.price %>
+                    </td>
+                    <td>
+                      <%= product.number %>
+                    </td>
+                    <td>
+                      <%= product.price * product.number %>
+                    </td>
+                    <td>
+                      <%= ((product.overdue - Time.now) / 86400).to_i %>天后
+                    </td>
+                    <td>
+                      <div class="visible-md visible-lg hidden-sm hidden-xs btn-group" data-turbolinks="false">
+                        <a class="btn btn-xs btn-primary" href=<%= customer_products_path(product.customer) %>>
+                          <i class="fa fa-edit bigger-120"></i>
+                          查看
+                        </a>
+                      </div>
+                    </td>
+
+                  </tr>
+              <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+
+
+
+<%= render 'layerend' %>

@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  customer_id: 
+  productdef_id: 
+  price: 1.5
+  number: 1.5
+  overdue: 2018-09-20 22:48:06
+
+two:
+  customer_id: 
+  productdef_id: 
+  price: 1.5
+  number: 1.5
+  overdue: 2018-09-20 22:48:06

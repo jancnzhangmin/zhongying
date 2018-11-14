@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 
+  commpany: MyString
+  contact: MyString
+  contactphone: MyString
+  province: MyString
+  city: MyString
+  district: MyString
+  address: MyString
+  summary: MyText
+  transcustomer: 1
+
+two:
+  user_id: 
+  commpany: MyString
+  contact: MyString
+  contactphone: MyString
+  province: MyString
+  city: MyString
+  district: MyString
+  address: MyString
+  summary: MyText
+  transcustomer: 1

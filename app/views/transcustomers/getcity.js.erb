@@ -1,0 +1,5 @@
+$('#cityid').html('<%= j(options_from_collection_for_select @city, :address, :address)%>');
+$("#cityid").prepend("<option value=''>--市--</option>");
+$("#cityid").val('');
+
+$("#districtid").html("<option value=''>--区/县--</option>");

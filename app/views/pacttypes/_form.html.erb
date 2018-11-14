@@ -1,0 +1,27 @@
+<%= form_for(@pacttype,:html => {:class=>'form-horizontal m-t',:multipart => true}) do |f| %>
+    <h3 class="header smaller lighter blue">
+
+      <small></small>
+    </h3>
+    <div class="form-group">
+      <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 合同类型 </label>
+      <div class="col-sm-10">
+        <%= f.text_field :pacttype,class:"col-xs-10 col-sm-8" %>
+      </div>
+    </div>
+
+    <div class="clearfix form-actions">
+      <div class="col-md-offset-2 col-md-10">
+        <button type="submit" name="commit" value="保存" class="btn btn-info" data-disable-with="保存" id="submit">
+          <i class="icon-ok bigger-110"></i>
+          保存
+        </button>
+        &nbsp;&nbsp;&nbsp;
+
+        <a class="btn" href=<%= pacttypes_path %>>
+          <i class="icon-undo bigger-110"></i>
+          返回
+        </a>
+      </div>
+    </div>
+<% end %>

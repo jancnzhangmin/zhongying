@@ -1,0 +1,8 @@
+$('#model').val('<%= @productdef.model %>');
+$('#unit').val('<%= @productdef.unit %>');
+$('#price').val('<%= @productdef.price %>');
+$('#number').val('1');
+$('#sum').val(parseFloat($('#price').val()) * parseFloat($('#number').val()));
+if('<%= @productdef.overdue %>') {
+    $('#overdue').val('<%= (Time.now + (@productdef.overdue - 7).days).strftime('%Y-%m-%d') %>');
+}

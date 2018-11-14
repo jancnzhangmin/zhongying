@@ -1,0 +1,2 @@
+class Pacttype < ApplicationRecord
+end
